@@ -6,7 +6,12 @@ namespace Задача_6._3
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            Matrix matrix = new Matrix(3, 3);
+
+            foreach (int numb in matrix)
+            {
+                Console.WriteLine(numb);
+            }
         }
     }
 }
