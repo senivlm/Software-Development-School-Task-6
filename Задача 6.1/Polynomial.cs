@@ -53,53 +53,61 @@ namespace Задача_6_1
 
         public static Polynomial operator +(Polynomial a, Polynomial b)
         {
+            Polynomial newPolynomial = new Polynomial();
+            foreach (PolynomialPart part in a.parts)
+                newPolynomial.parts.Add(new PolynomialPart(part.RealPart, part.PolynomRank));
+
             foreach (PolynomialPart polynomialPart in b.parts)
             {
-                PolynomialPart part = a.parts.FirstOrDefault(x => x.PolynomRank == polynomialPart.PolynomRank);
+                PolynomialPart part = newPolynomial.parts.FirstOrDefault(x => x.PolynomRank == polynomialPart.PolynomRank);
                 if (part != null)
                 {
                     part.RealPart += polynomialPart.RealPart;
 
                     if (part.RealPart == 0)
                     {
-                        a.parts.Remove(part);
+                        newPolynomial.parts.Remove(part);
                     }
                 }
                 else
                 {
-                    a.parts.Add(polynomialPart);
+                    newPolynomial.parts.Add(polynomialPart);
                 }
             }
 
-            a.parts.Sort((x, y) => x.PolynomRank.CompareTo(y.PolynomRank));
+            newPolynomial.parts.Sort((x, y) => x.PolynomRank.CompareTo(y.PolynomRank));
 
-            return a;
+            return newPolynomial;
         }
 
         public static Polynomial operator -(Polynomial a, Polynomial b)
         {
+            Polynomial newPolynomial = new Polynomial();
+            foreach (PolynomialPart part in a.parts)
+                newPolynomial.parts.Add(part);
+
             foreach (PolynomialPart polynomialPart in b.parts)
             {
-                PolynomialPart part = a.parts.FirstOrDefault(x => x.PolynomRank == polynomialPart.PolynomRank);
+                PolynomialPart part = newPolynomial.parts.FirstOrDefault(x => x.PolynomRank == polynomialPart.PolynomRank);
                 if (part != null)
                 {
                     part.RealPart -= polynomialPart.RealPart;
 
                     if (part.RealPart == 0)
                     {
-                        a.parts.Remove(part);
+                        newPolynomial.parts.Remove(part);
                     }
                 }
                 else
                 {
                     PolynomialPart newPart = new PolynomialPart(-polynomialPart.RealPart, polynomialPart.PolynomRank);
-                    a.parts.Add(newPart);
+                    newPolynomial.parts.Add(newPart);
                 }
             }
 
-            a.parts.Sort((x, y) => x.PolynomRank.CompareTo(y.PolynomRank));
+            newPolynomial.parts.Sort((x, y) => x.PolynomRank.CompareTo(y.PolynomRank));
 
-            return a;
+            return newPolynomial;
         }
 
         public static Polynomial operator *(Polynomial a, Polynomial b)
