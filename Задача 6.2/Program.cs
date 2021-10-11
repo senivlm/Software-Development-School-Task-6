@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Завдання_6
+namespace Задача_6._2
 {
     class Program
     {
