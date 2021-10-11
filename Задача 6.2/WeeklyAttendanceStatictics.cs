@@ -20,6 +20,26 @@ namespace Задача_6._2
             uniqueRecords = records.GroupBy(record => record.Ip).Select(x => x.First()).ToList();
         }
 
+        public string GetSiteMostPopularHourInterval()
+        {
+            string result = "\nНайбільш популярний час для всього сайту: ";
+            result += GetMostPopularHourInterval(records);
+            return result;
+        }
+
+        public string GetEachIpMostPopularHourInverval()
+        {
+            string result = "\nНайбільш популярний час для кожного ip:\n";
+
+            foreach (Record record in uniqueRecords)
+            {
+                List<Record> recordsList = records.Where(x => x.Ip == record.Ip).ToList();
+                result += record.Ip + " : " + GetMostPopularHourInterval(recordsList) + "\n";
+            }
+
+            return result;
+        }
+
         public string GetEachIpWeaklyAttendance()
         {
             string result = "\nКількість відвідувань на тиждень для кожного ip:\n";
@@ -42,6 +62,17 @@ namespace Задача_6._2
             }
 
             return result;
+        }
+
+        private string GetMostPopularHourInterval(List<Record> records)
+        {
+            int hour1 = records.GroupBy(x => x.DateTime.Hour)
+                            .OrderByDescending(i => i.Count())
+                            .First().Key;
+
+            int hour2 = hour1 + 1;
+
+            return hour1.ToString() + " - " + hour2.ToString();
         }
 
         private string GetIpMostPopularWeekday(string ip)

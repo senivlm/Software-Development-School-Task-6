@@ -12,8 +12,11 @@ namespace Задача_6._2
             string filePath = Console.ReadLine();
 
             WeeklyAttendanceStatictics statictics = new WeeklyAttendanceStatictics(filePath);
+
             Console.WriteLine(statictics.GetEachIpWeaklyAttendance());
             Console.WriteLine(statictics.GetEachIpMostPopularWeekday());
+            Console.WriteLine(statictics.GetSiteMostPopularHourInterval());
+            Console.WriteLine(statictics.GetEachIpMostPopularHourInverval());
         }
     }
 }

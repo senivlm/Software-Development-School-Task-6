@@ -14,10 +14,5 @@ namespace Задача_6._2
             DateTime = dateTime;
             Day = day ?? throw new ArgumentNullException(nameof(day));
         }
-
-        public override bool Equals(object obj)
-        {
-            return obj is Record record && Ip == record.Ip;
-        }
     }
 }
