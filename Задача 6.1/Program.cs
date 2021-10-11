@@ -12,14 +12,16 @@ namespace Задача_6_1
             Polynomial polynomial1 = new Polynomial("5x^0+-2x^2");
             Polynomial polynomial2 = new Polynomial("10x^2+1x^3+-3x^4");
 
-            polynomial2[2] = 0;
+            Console.WriteLine(polynomial1);
+            Console.WriteLine(polynomial2);
 
-            Console.WriteLine(polynomial1.ToString());
-            Console.WriteLine(polynomial2.ToString());
+            Polynomial polynomial3 = polynomial1 * polynomial2;
+            Console.WriteLine(polynomial3);
 
             Console.WriteLine();
-            polynomial1.Add(polynomial2);
-            Console.WriteLine(polynomial1.ToString());
+            double x = 5.2;
+            Polynomial polynomial4 = x;
+            Console.WriteLine(polynomial4);
 
             Console.ReadKey();
         }

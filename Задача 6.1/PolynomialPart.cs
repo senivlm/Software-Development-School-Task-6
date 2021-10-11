@@ -2,10 +2,10 @@
 {
     public class PolynomialPart
     {
-        public int RealPart { get; set; }
+        public double RealPart { get; set; }
         public int PolynomRank { get; set; }
 
-        public PolynomialPart(int realPart, int polynomRank)
+        public PolynomialPart(double realPart, int polynomRank)
         {
             RealPart = realPart;
             PolynomRank = polynomRank;

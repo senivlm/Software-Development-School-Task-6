@@ -8,6 +8,11 @@ namespace Задача_6_1
     {
         public List<PolynomialPart> parts { get; set; }
 
+        public Polynomial()
+        {
+            parts = new List<PolynomialPart>();
+        }
+
         public Polynomial(string s)
         {
             parts = new List<PolynomialPart>();
@@ -24,7 +29,7 @@ namespace Задача_6_1
 
                 if (value != 0)
                 {
-                    if(part != null)
+                    if (part != null)
                     {
                         part.RealPart = value;
                     }
@@ -34,9 +39,9 @@ namespace Задача_6_1
                         parts.Add(newPart);
                     }
                 }
-                else if(value == 0)
+                else if (value == 0)
                 {
-                    if(part != null)
+                    if (part != null)
                     {
                         parts.Remove(part);
                     }
@@ -46,65 +51,78 @@ namespace Задача_6_1
             }
         }
 
-        public void Add(Polynomial polynomial)
+        public static Polynomial operator +(Polynomial a, Polynomial b)
         {
-            foreach(PolynomialPart polynomialPart in polynomial.parts)
+            foreach (PolynomialPart polynomialPart in b.parts)
             {
-                PolynomialPart part = parts.FirstOrDefault(x => x.PolynomRank == polynomialPart.PolynomRank);
-                if(part != null)
+                PolynomialPart part = a.parts.FirstOrDefault(x => x.PolynomRank == polynomialPart.PolynomRank);
+                if (part != null)
                 {
                     part.RealPart += polynomialPart.RealPart;
 
                     if (part.RealPart == 0)
                     {
-                        parts.Remove(part);
+                        a.parts.Remove(part);
                     }
                 }
                 else
                 {
-                    parts.Add(polynomialPart);
+                    a.parts.Add(polynomialPart);
                 }
             }
 
-            parts.Sort((x, y) => x.PolynomRank.CompareTo(y.PolynomRank));
+            a.parts.Sort((x, y) => x.PolynomRank.CompareTo(y.PolynomRank));
+
+            return a;
         }
 
-        public void Subtract(Polynomial polynomial)
+        public static Polynomial operator -(Polynomial a, Polynomial b)
         {
-            foreach (PolynomialPart polynomialPart in polynomial.parts)
+            foreach (PolynomialPart polynomialPart in b.parts)
             {
-                PolynomialPart part = parts.FirstOrDefault(x => x.PolynomRank == polynomialPart.PolynomRank);
+                PolynomialPart part = a.parts.FirstOrDefault(x => x.PolynomRank == polynomialPart.PolynomRank);
                 if (part != null)
                 {
                     part.RealPart -= polynomialPart.RealPart;
 
-                    if(part.RealPart == 0)
+                    if (part.RealPart == 0)
                     {
-                        parts.Remove(part);
+                        a.parts.Remove(part);
                     }
                 }
                 else
                 {
                     PolynomialPart newPart = new PolynomialPart(-polynomialPart.RealPart, polynomialPart.PolynomRank);
-                    parts.Add(newPart);
+                    a.parts.Add(newPart);
                 }
             }
 
-            parts.Sort((x, y) => x.PolynomRank.CompareTo(y.PolynomRank));
+            a.parts.Sort((x, y) => x.PolynomRank.CompareTo(y.PolynomRank));
+
+            return a;
         }
 
-        public void Multiply(Polynomial polynomial)
+        public static Polynomial operator *(Polynomial a, Polynomial b)
         {
-            foreach (PolynomialPart polynomialPart in polynomial.parts)
+            Polynomial newPolynomial = new Polynomial();
+
+            foreach(PolynomialPart aPart in a.parts)
             {
-                PolynomialPart part = parts.FirstOrDefault(x => x.PolynomRank == polynomialPart.PolynomRank);
-                if (part != null)
+                foreach(PolynomialPart bPart in b.parts)
                 {
-                    part.RealPart *= polynomialPart.RealPart;
+                    newPolynomial.parts.Add(new PolynomialPart(aPart.RealPart * bPart.RealPart, aPart.PolynomRank + bPart.PolynomRank));
                 }
             }
 
-            parts.Sort((x, y) => x.PolynomRank.CompareTo(y.PolynomRank));
+            newPolynomial.parts.Sort((x, y) => x.PolynomRank.CompareTo(y.PolynomRank));
+            return newPolynomial;
+        }
+
+        public static implicit operator Polynomial(double t)
+        {
+            Polynomial newPolynomial = new Polynomial();
+            newPolynomial.parts.Add(new PolynomialPart(t, 0));
+            return newPolynomial;
         }
 
         public void Parse(string s)
@@ -115,7 +133,7 @@ namespace Задача_6_1
             {
                 string[] numbers = parts[i].Split("x^");
 
-                int realPart = int.Parse(numbers[0]);
+                double realPart = double.Parse(numbers[0]);
                 int polynomRank = int.Parse(numbers[1]);
 
                 PolynomialPart part = new PolynomialPart(realPart, polynomRank);
