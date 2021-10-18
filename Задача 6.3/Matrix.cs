@@ -6,12 +6,12 @@ using System.Text;
 namespace Задача_6._3
 {
     public class Matrix : IEnumerable
-    {
+    { Можна матрицю параметризовану зробити
         private int[][] value;
         private int rows, columns;
 
         public Matrix(int m, int n)
-        {
+        {Чому як масив масивів?
             value = new int[m][];
             rows = m;
             columns = n;
